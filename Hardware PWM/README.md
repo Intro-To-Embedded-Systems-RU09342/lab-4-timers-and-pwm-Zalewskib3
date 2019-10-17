@@ -1,15 +1,3 @@
 # Hardware PWM
-Now that you have done the software version of PWM, it is time to start leveraging other features of these Timer Modules.
+This lab was meant to show us how to use the hardware features of our boards to do PWM cycle modulation, this required tapping into our timer modules, rather than using the software to accomplish this. The first couple initializations are setting up the LEDs to be used. This is accomplished by setting two of them to the output direction, one to be effected by the PWM, and the other one gives us visual confirmation by blinking every time the PWM duty cycle changes. The confirmation LED is then initialized to 0 so it is not on when the button is not pressed. After this, a pull-up resistor is initialized so the button can dissipate the excess current left over when not pressed. As well, the interrupt flags are enabled, set, and cleared. Then the timer is initialized in up mode, however it is divided by 2 as to extend the signal. The next couple lines of code set certain aspects of the PWM, like the duty cycle and the period and then sets the timer to set/reset mode. Outside the main function is and if statement with a nested else-if statement to make sure the duty cycle stays within the right parameters. The outside if statement sets up the interupt edge anded with the button press and if they are both a logic 1 the LED can increment by 10%. The nested else-if statement just resets the duty cycle to 0 when it gets to be above 100%. After the if statements set the next interrupt edge, then it toggles the LED, then it clears the flag. 
 
-## Task
-Replicate the same behavior as in the software PWM, but by using the Timer Modules ability to directly output to a GPIO Pin instead of managing them in software. One way to think about this is: unless there are other functions running in your code, your system should initialize, set the Timer Modules, and then turn off the CPU.
-
-## Deliverables
-You will need to have two folders in this repository, one for each of the processors that you used for this part of the lab. Remember to replace this README with your own.
-
-### Hints
-Read up on the P1SEL registers as well as look at the Timer modules ability to multiplex.
-
-## Extra Work
-### Using ACLK
-Some of these microprocessors have a built in ACLK which is extremely slow compared to the up to 25MHz available on some of them. What is the overall impact on the system when using this clock? Can you actually use your PWM code with a clock that slow?
